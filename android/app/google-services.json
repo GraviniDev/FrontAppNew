@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "866107860032",
+    "project_id": "gravini-notificaciones",
+    "storage_bucket": "gravini-notificaciones.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:866107860032:android:15e01aab638e2872abeba5",
+        "android_client_info": {
+          "package_name": "com.gravini.gravini"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "866107860032-4tdd2opkfmdqm5j3sgad2s8r1cuugg92.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gravini.gravini",
+            "certificate_hash": "164e2533a2f6bc94cd4ba618584ab8dd94240986"
+          }
+        },
+        {
+          "client_id": "866107860032-1unjdmunn9rcjq17kc3rfdefnrb8g1nv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_g_h9t6bCgwUksLqQTn-SvABnYc6kQRU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "866107860032-1unjdmunn9rcjq17kc3rfdefnrb8g1nv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
