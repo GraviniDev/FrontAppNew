@@ -149,7 +149,9 @@ class _UsuariosPageState extends State<UsuariosPage> {
               children: [
                 CircleAvatar(
                   backgroundColor: const Color.fromARGB(223, 110, 137, 158),
-                  backgroundImage: NetworkImage(usuario.imagenPerfil!),
+                  backgroundImage: usuario.imagenPerfil == null
+                      ? const AssetImage('assets/images.png') as ImageProvider
+                      : NetworkImage(usuario.imagenPerfil!),
                   maxRadius: 20,
                 ),
                 Container(
