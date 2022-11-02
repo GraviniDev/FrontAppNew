@@ -108,11 +108,9 @@ class _MensajePageState extends State<MensajePage>
         title: Row(children: [
           CircleAvatar(
             backgroundColor: Colors.blue[100],
-            maxRadius: 22,
-            child: Text(
-              usuarioPara.nombre!.substring(0, 2),
-              style: TextStyle(fontSize: 12),
-            ),
+            backgroundImage: usuarioPara.imagenPerfil == null
+                ? const AssetImage('assets/images.png') as ImageProvider
+                : NetworkImage(usuarioPara.imagenPerfil!),
           ),
           const SizedBox(
             width: 10,
