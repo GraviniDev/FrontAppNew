@@ -13,6 +13,7 @@ import 'package:gravini/pages/register_page.dart';
 import 'package:gravini/pages/spiritualDetail_page.dart';
 import 'package:gravini/pages/usuarios_page.dart';
 
+import '../pages/prayerDetail_page.dart';
 import '../pages/register2_page.dart';
 import '../pages/register3_page.dart';
 
@@ -31,5 +32,6 @@ final Map<String, Widget Function(BuildContext)> appRoutes = {
   'registerDatos': (_) => RegisterDatosPage(),
   'registerName': (_) => RegisterNamePage(),
   'spiritualPage': (_) => SpirtualDetailPage(),
-  'oracionPage': (_) => OracionPage()
+  'oracionPage': (_) => OracionPage(),
+  'PlayerDetailPage': (_) => PlayerDetailPage()
 };

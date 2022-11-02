@@ -12,18 +12,21 @@ class Oraciones {
     this.detalle,
     this.subtitulo,
     this.titulo,
+    this.id,
     this.imagen,
   });
 
   String? detalle;
   String? subtitulo;
   String? titulo;
+  int? id;
   String? imagen;
 
   factory Oraciones.fromJson(Map<String, dynamic> json) => Oraciones(
         detalle: json["Detalle"],
         subtitulo: json["Subtitulo"],
         titulo: json["Titulo"],
+        id: json["id"],
         imagen: json["imagen"],
       );
 
@@ -31,6 +34,7 @@ class Oraciones {
         "Detalle": detalle,
         "Subtitulo": subtitulo,
         "Titulo": titulo,
+        "id": id,
         "imagen": imagen,
       };
 }
