@@ -92,15 +92,33 @@ class _UsuariosPageState extends State<UsuariosPage> {
 
   ListView _listViewUserOnline(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
-    return ListView.builder(
-        scrollDirection: Axis.horizontal,
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (_, i) => Row(
-              children: [
-                _userOnlineContainer(authService.usersConnected[i], context),
-              ],
-            ),
-        itemCount: authService.usersConnected.length);
+
+    return authService.usersConnected.length > 0
+        ? ListView.builder(
+            scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (_, i) => Row(
+                  children: [
+                    _userOnlineContainer(
+                        authService.usersConnected[i], context),
+                  ],
+                ),
+            itemCount: authService.usersConnected.length)
+        : ListView.builder(
+            scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (_, i) => Row(
+                  children: [
+                    Container(
+                        height: 250,
+                        padding: const EdgeInsets.all(20),
+                        alignment: Alignment.topCenter,
+                        child: Column(children: [
+                          Text('¡Ups no hay usuarios conectados!')
+                        ]))
+                  ],
+                ),
+            itemCount: 1);
   }
 
   ListTile _userListTile(Usuario usuario) {
