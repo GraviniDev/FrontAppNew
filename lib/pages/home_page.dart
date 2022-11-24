@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gravini/providers/mostrarMenuFlotante.dart';
 import 'package:gravini/providers/statusMenuFlotante.dart';
+import 'package:gravini/services/bolsa_service.dart';
 import 'package:gravini/services/oraciones_service.dart';
 import 'package:gravini/widgets/boton_bolsa.dart';
 import 'package:gravini/widgets/boton_gordo.dart';
@@ -153,6 +154,10 @@ class _listJobs extends StatefulWidget {
 class _listJobsState extends State<_listJobs> {
   @override
   Widget build(BuildContext context) {
+    final oracionesService = Provider.of<BolsaServices>(context, listen: false);
+
+    oracionesService.getJobs();
+
     return ListView(
       controller: widget.controller,
       children: const [

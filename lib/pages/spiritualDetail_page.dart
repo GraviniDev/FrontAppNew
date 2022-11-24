@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gravini/models/oraciones.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:html/dom.dart' as dom;
-import '../search/search_delegate.dart';
 import '../services/oraciones_service.dart';
 
 class SpirtualDetailPage extends StatefulWidget {
-  SpirtualDetailPage({Key? key}) : super(key: key);
-
   @override
   State<SpirtualDetailPage> createState() => _SpirtualDetailStatePage();
 }
@@ -56,13 +51,13 @@ class _SpirtualDetailStatePage extends State<SpirtualDetailPage> {
         body: Container(
             child: ListView.separated(
                 physics: const BouncingScrollPhysics(),
-                itemBuilder: (_, i) => _userListTile(dbPrayer[i], context),
+                itemBuilder: (_, i) => _playerListTile(dbPrayer[i], context),
                 separatorBuilder: (_, i) => const Divider(),
                 itemCount: dbPrayer.length)));
   }
 }
 
-ListTile _userListTile(Oraciones player, BuildContext context) {
+ListTile _playerListTile(Oraciones player, BuildContext context) {
   return ListTile(
     title: Text(player.titulo!,
         style: const TextStyle(
