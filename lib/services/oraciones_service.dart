@@ -31,12 +31,17 @@ class OracionesServices with ChangeNotifier {
 
     String body = resp.body;
     if (body.length != 2) {
-      final mensajesResp = oracionesFromJson(resp.body);
+      if (resp.body == "null") {
+        List<Oraciones> dbUsuario = [];
+        return dbUsuario;
+      } else {
+        final mensajesResp = oracionesFromJson(resp.body);
 
-      List<Oraciones> listprevia =
-          mensajesResp.entries.map((e) => e.value).toList();
+        List<Oraciones> listprevia =
+            mensajesResp.entries.map((e) => e.value).toList();
 
-      return listprevia;
+        return listprevia;
+      }
     } else {
       List<Oraciones> dbUsuario = [];
       return dbUsuario;

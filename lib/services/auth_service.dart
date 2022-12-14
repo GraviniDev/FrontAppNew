@@ -174,23 +174,7 @@ class AuthService with ChangeNotifier {
         ..fields['estado'] = estado.toString()
         ..files.add(file);
     }
-// var response = await newUser.send();
-//     final data = {
-//       "nombre": nombre,
-//       "apellidoPaterno": apellidoPaterno,
-//       "apellidoMaterno": apellidoMaterno,
-//       "curp": curp,
-//       "numeroCelular": numeroCelular,
-//       "estadoResidencia": estadoResidencia,
-//       "fechaNacimiento": '1992-01-28',
-//       "esEgresado": esEgresado,
-//       "anioIngreso": anioIngreso,
-//       "campusVilla": campusVilla,
-//       "correo": correo,
-//       "password": password,
-//       "rol": rol,
-//       "estado":
-//     };
+
     newUser.headers['Content-Type'] = "application/json";
 
     var streamResponse = await newUser.send();
@@ -233,7 +217,7 @@ class AuthService with ChangeNotifier {
 
       return false;
     } catch (e) {
-      return true;
+      return false;
     }
   }
 

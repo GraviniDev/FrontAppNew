@@ -156,7 +156,7 @@ class _listJobsState extends State<_listJobs> {
   Widget build(BuildContext context) {
     final oracionesService = Provider.of<BolsaServices>(context, listen: false);
 
-    oracionesService.getJobs();
+    // oracionesService.getJobs();
 
     return ListView(
       controller: widget.controller,
@@ -352,7 +352,7 @@ class _listSpiritualState extends State<_listSpiritual> {
             titulo: 'La Confesión',
             subtitulo: 'La Confesión',
             onPressr: () {
-              oracionesService.setTitulo = 'Meditación Diaria';
+              oracionesService.setTitulo = 'La Confesión';
               Navigator.pushNamed(context, 'spiritualPage');
             }),
         BotonRincon(
