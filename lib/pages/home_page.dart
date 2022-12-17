@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gravini/models/mensajes_response.dart';
 import 'package:gravini/providers/mostrarMenuFlotante.dart';
 import 'package:gravini/providers/statusMenuFlotante.dart';
 import 'package:gravini/services/bolsa_service.dart';
@@ -10,6 +11,13 @@ import 'package:gravini/widgets/boton_riconEspiritual.dart';
 import 'package:gravini/widgets/headers.dart';
 import 'package:gravini/widgets/menu_flotante.dart';
 import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+
+import '../models/publicaciones.dart';
+import '../models/usuario.dart';
+import '../services/auth_service.dart';
+import '../services/publicaciones_service.dart';
+import '../services/usuarios_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -154,9 +162,9 @@ class _listJobs extends StatefulWidget {
 class _listJobsState extends State<_listJobs> {
   @override
   Widget build(BuildContext context) {
-    final oracionesService = Provider.of<BolsaServices>(context, listen: false);
+    final bolsaService = Provider.of<BolsaServices>(context, listen: false);
 
-    // oracionesService.getJobs();
+    bolsaService.getJobs();
 
     return ListView(
       controller: widget.controller,
@@ -220,11 +228,10 @@ class _listJobsState extends State<_listJobs> {
 }
 
 class _listPublicaciones extends StatefulWidget {
-  const _listPublicaciones({
+  _listPublicaciones({
     Key? key,
     required this.controller,
   }) : super(key: key);
-
   final ScrollController controller;
 
   @override
@@ -232,24 +239,192 @@ class _listPublicaciones extends StatefulWidget {
 }
 
 class _listPublicacionesState extends State<_listPublicaciones> {
+  List<Publicacion> dbPost = [];
+  final postService = PostService();
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+  final usuariosService = UsuariosService();
+
+  List<Usuario> dbUsuario = [];
+  @override
+  void initState() {
+    super.initState();
+    // _loadConnectedUsers();
+    _loadPost();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      controller: widget.controller,
-      children: const [
+    final postService = Provider.of<PostService>(context);
+    final authService = Provider.of<AuthService>(context);
+
+    authService.getCurrentUser();
+    final user = authService.usuario;
+    return Column(
+      children: [
         SizedBox(
-          height: 30,
+          height: 60,
         ),
-        Center(
-            child: Text(
-          "Publicaciones",
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-        )),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: CircleAvatar(
+                  backgroundImage: user?.imagenPerfil == "null"
+                      ? const AssetImage('assets/images.png') as ImageProvider
+                      : NetworkImage(user!.imagenPerfil!),
+                  backgroundColor: Colors.blue[100],
+                  maxRadius: 25,
+                ),
+              ),
+              Expanded(
+                child: TextField(
+                  onTap: () {
+                    Navigator.pushNamed(context, 'addPublicacion');
+                  },
+                  decoration: InputDecoration(
+                    focusColor: Color.fromARGB(0, 139, 112, 48),
+                    hintText: '¿Qué estas pensando?',
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
         SizedBox(
           height: 10,
+          child: Container(color: Colors.grey[300]),
+        ),
+        Container(
+          child: Flexible(
+            fit: FlexFit.tight,
+            child: SmartRefresher(
+              controller: _refreshController,
+              enablePullDown: true,
+              onRefresh: _loadPost,
+              header: WaterDropHeader(
+                complete: Icon(Icons.check, color: Colors.blue[400]),
+                waterDropColor: Colors.blue.withOpacity(0.4),
+              ),
+              child: _listViewPost(),
+            ),
+          ),
         ),
       ],
     );
+  }
+
+  ListView _listViewPost() {
+    return ListView.separated(
+        physics: const BouncingScrollPhysics(),
+        itemBuilder: (_, i) => _userListTile(dbPost[i]),
+        separatorBuilder: (_, i) => SizedBox(
+              height: 10,
+              child: Container(color: Colors.grey[300]),
+            ),
+        //Divider(
+        //    color: Colors.grey,
+        //  height: 50,
+        //  ),
+        itemCount: dbPost.length);
+  }
+
+  Container _userListTile(Publicacion post) {
+    Usuario user = dbUsuario.firstWhere((x) => x.uid == post.autor);
+    return Container(
+      child: Column(
+        children: [
+          ListTile(
+            title: Text((user.nombre! + " " + user.apellidoPaterno!)),
+            leading: CircleAvatar(
+              radius: 20,
+              backgroundColor: Colors.blue[100],
+              backgroundImage: user.imagenPerfil == null
+                  ? const AssetImage('assets/images.png') as ImageProvider
+                  : NetworkImage(user.imagenPerfil!),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8.0),
+            child: Text(
+              post.body!,
+              style: TextStyle(fontSize: 16.0),
+            ),
+          ),
+          SizedBox(height: 30),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: 30),
+                  IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        FontAwesomeIcons.solidHeart,
+                        color: Colors.red,
+                        size: 15,
+                      )),
+                  Text("100"),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  SizedBox(width: 10),
+                  IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        FontAwesomeIcons.comment,
+                        size: 15,
+                      )),
+                  Text("200"),
+                  SizedBox(width: 30),
+                ],
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: 30),
+                  IconButton(
+                      onPressed: () {}, icon: Icon(FontAwesomeIcons.heart)),
+                  Text("Me encanta"),
+                  SizedBox(width: 30),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  SizedBox(width: 30),
+                  IconButton(
+                      onPressed: () {}, icon: Icon(FontAwesomeIcons.comment)),
+                  Text("Comentar"),
+                  SizedBox(width: 30),
+                ],
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  _loadPost() async {
+    dbUsuario = await usuariosService.getUsuario();
+    dbPost = await postService.getPost();
+
+    if (this.mounted) {
+      setState(() {});
+    }
+    _refreshController.refreshCompleted();
   }
 }
 

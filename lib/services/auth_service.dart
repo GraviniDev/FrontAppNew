@@ -199,21 +199,20 @@ class AuthService with ChangeNotifier {
         'authToken': token ?? "u"
       });
       final obtenerUsuarioResponse = obtenerUsuariosResponseFromJson(resp.body);
-      if (resp.statusCode == 200) {
-        if (obtenerUsuarioResponse.code == 0) {
-          listUsuario = obtenerUsuarioResponse.data;
 
-          return true;
-        } else {
-          final email = await _storage.read(key: 'email');
-          final pass = await _storage.read(key: 'pass');
-          final resp = await login(email!, pass!);
-          return resp;
-        }
+      if (obtenerUsuarioResponse.code == 0) {
+        listUsuario = obtenerUsuarioResponse.data;
+
+        return true;
       } else {
-        logout();
-        return false;
+        final email = await _storage.read(key: 'email');
+        final pass = await _storage.read(key: 'pass');
+        final resp = await login(email!, pass!);
+        return resp;
       }
+
+      logout();
+      return false;
 
       return false;
     } catch (e) {
@@ -325,4 +324,5 @@ class AuthService with ChangeNotifier {
     _autenticando = false;
     notifyListeners();
   }
+
 }

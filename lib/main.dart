@@ -6,8 +6,10 @@ import 'package:gravini/providers/registro_form_provider.dart';
 import 'package:gravini/providers/statusMenuFlotante.dart';
 import 'package:gravini/routes/routes.dart';
 import 'package:gravini/services/auth_service.dart';
+import 'package:gravini/services/bolsa_service.dart';
 import 'package:gravini/services/chat_service.dart';
 import 'package:gravini/services/oraciones_service.dart';
+import 'package:gravini/services/publicaciones_service.dart';
 import 'package:gravini/services/push_notifivations_service.dart';
 import 'package:gravini/services/socket_service.dart';
 import 'package:gravini/services/usuarios_service.dart';
@@ -53,7 +55,9 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_) => statusMenu()),
         ChangeNotifierProvider(create: (_) => MostrarMenuModel()),
         ChangeNotifierProvider(create: (_) => ChatService()),
-        ChangeNotifierProvider(create: (_) => OracionesServices())
+        ChangeNotifierProvider(create: (_) => OracionesServices()),
+        ChangeNotifierProvider(create: (_) => PostService()),
+        ChangeNotifierProvider(create: (_) => BolsaServices())
       ],
       child: MaterialApp(
         localizationsDelegates: const [

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gravini/pages/addPublicacion_page.dart';
+import 'package:gravini/pages/donacion_page.dart';
 import 'package:gravini/pages/loading.dart';
 import 'package:gravini/pages/login_page.dart';
 import 'package:gravini/pages/home_page.dart';
@@ -33,5 +35,7 @@ final Map<String, Widget Function(BuildContext)> appRoutes = {
   'registerName': (_) => RegisterNamePage(),
   'spiritualPage': (_) => SpirtualDetailPage(),
   'oracionPage': (_) => OracionPage(),
-  'PlayerDetailPage': (_) => PlayerDetailPage()
+  'PlayerDetailPage': (_) => PlayerDetailPage(),
+  'addPublicacion': (_) => AddPublicacionPage(),
+  'donacion': (_) => DonacionPage()
 };

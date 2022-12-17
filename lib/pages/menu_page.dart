@@ -139,7 +139,7 @@ class infoUser extends StatelessWidget {
         ),
         Stack(children: [
           CircleAvatar(
-            backgroundImage: user?.imagenPerfil == null
+            backgroundImage: user?.imagenPerfil == "null"
                 ? const AssetImage('assets/images.png') as ImageProvider
                 : NetworkImage(user!.imagenPerfil!),
             backgroundColor: Colors.blue[100],

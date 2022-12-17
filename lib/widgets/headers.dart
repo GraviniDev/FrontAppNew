@@ -40,24 +40,26 @@ class _IconosSecudarios extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        IconButton(
+        /*  IconButton(
           icon: const FaIcon(FontAwesomeIcons.magnifyingGlass),
           iconSize: 25,
           color: const Color.fromARGB(238, 185, 183, 183),
           onPressed: () {},
-        ),
+        ), */
         IconButton(
           icon: const FaIcon(FontAwesomeIcons.circleDollarToSlot),
           iconSize: 25,
           color: const Color.fromARGB(238, 185, 183, 183),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, 'donacion');
+          },
         ),
-        IconButton(
-          icon: const FaIcon(FontAwesomeIcons.solidBell),
-          iconSize: 25,
-          color: const Color.fromARGB(238, 185, 183, 183),
-          onPressed: () {},
-        ),
+        // IconButton(
+        //   icon: const FaIcon(FontAwesomeIcons.solidBell),
+        //   iconSize: 25,
+        //   color: const Color.fromARGB(238, 185, 183, 183),
+        //   onPressed: () {},
+        // ),
         IconButton(
           icon: const FaIcon(FontAwesomeIcons.facebookMessenger),
           iconSize: 25,
